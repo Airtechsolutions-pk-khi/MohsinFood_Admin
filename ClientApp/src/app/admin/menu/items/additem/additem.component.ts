@@ -18,7 +18,8 @@ export class AdditemsComponent implements OnInit {
   itemsForm: FormGroup;
   loading = false;
   loadingItems = false;
-  Categories = [];
+  // Categories = [];
+  CategoriesActive = [];
   ModifiersList = [];
   AddonsList = [];
   selectedModifierIds: string[];
@@ -35,7 +36,8 @@ export class AdditemsComponent implements OnInit {
 
   ) {
     this.createForm();
-    this.loadCategory();
+    // this.loadCategory();
+    this.loadActiveCategory();
     this.loadModifiers();
     this.loadAddons();
   }
@@ -158,10 +160,17 @@ export class AdditemsComponent implements OnInit {
     }
   }
 
-  private loadCategory() {
-    this.itemsService.loadCategories(this.f.brandID.value).subscribe((res: any) => {
+  // private loadCategory() {
+  //   this.itemsService.loadCategories(this.f.brandID.value).subscribe((res: any) => {
      
-      this.Categories = res;
+  //     this.Categories = res;
+  //   });
+  // }
+  private loadActiveCategory() {
+     
+    this.itemsService.loadActiveCategories(this.f.brandID.value).subscribe((res: any) => {
+     
+      this.CategoriesActive = res;
     });
   }
   private loadModifiers() {    
@@ -169,7 +178,8 @@ export class AdditemsComponent implements OnInit {
       this.ModifiersList = res;
     });
   }
-  private loadAddons() {    
+  private loadAddons() {  
+    
     this.itemsService.loadAddonList(this.f.brandID.value).subscribe((res: any) => {
       this.AddonsList = res;
     });

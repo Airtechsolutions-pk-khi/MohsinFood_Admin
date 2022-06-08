@@ -204,6 +204,21 @@ namespace BAL.Repositories
                     p1[0] = new SqlParameter("@ItemID", data.ItemID);
                     (new DBHelper().ExecuteNonQueryReturn)("sp_DeleteItemModifiers_Admin", p1);
                 }
+                if (data.Addons != "" && data.Addons != null)
+                {
+                    SqlParameter[] p1 = new SqlParameter[2];
+                    p1[0] = new SqlParameter("@ItemID", data.ItemID);
+                    p1[1] = new SqlParameter("@Addons", data.Addons);
+                    (new DBHelper().ExecuteNonQueryReturn)("sp_insertItemAddons_Admin", p1);
+
+                }
+                else
+                {
+                    SqlParameter[] p1 = new SqlParameter[1];
+                    p1[0] = new SqlParameter("@ItemID", data.ItemID);
+                    (new DBHelper().ExecuteNonQueryReturn)("sp_DeleteItemAddons_Admin", p1);
+                }
+
                 return rtn;
             }
             catch (Exception ex)

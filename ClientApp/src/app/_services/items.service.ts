@@ -77,6 +77,10 @@ export class ItemsService {
   loadCategories(brandId) {
     return this.http.get<Category[]>( `api/category/all/${brandId}`);
   }
+  loadActiveCategories(brandId) {
+    
+    return this.http.get<Category[]>( `api/category/allActive/${brandId}`);
+  }
   loadItems(brandId) {
     return this.http.get<Category[]>( `api/item/all/${brandId}`);
   }

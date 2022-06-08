@@ -54,7 +54,7 @@ export class AdddeliveryComponent implements OnInit {
   private createForm() {
     this.deliveryForm = this.formBuilder.group({
       name: ['', Validators.required],
-      amount: [''],
+      amount: [0],
       statusID: [true],
       // brandIDs :[''],
       deliveryAreaID: 0,    

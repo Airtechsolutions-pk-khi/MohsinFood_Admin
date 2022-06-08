@@ -54,6 +54,33 @@ namespace BAL.Repositories
                 return null;
             }
         }
+        public List<CategoryBLL> GetAllActive(int brandID)
+        {
+            try
+            {
+                var lst = new List<CategoryBLL>();
+                SqlParameter[] p = new SqlParameter[1];
+                p[0] = new SqlParameter("@brandid", brandID);
+
+                _dt = (new DBHelper().GetTableFromSP)("sp_GetCategoryActive", p);
+                if (_dt != null)
+                {
+                    if (_dt.Rows.Count > 0)
+                    {
+                        lst = _dt.DataTableToList<CategoryBLL>();
+
+                        //lst= JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(_dt)).ToArray<CategoryBLL>()
+                        //lst = _dt.ToList<CategoryBLL>().ToList();
+                    }
+                }
+
+                return lst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         public CategoryBLL Get(int id, int brandID)
         {

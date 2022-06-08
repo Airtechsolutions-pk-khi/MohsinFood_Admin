@@ -26,6 +26,11 @@ namespace MohsinFoodAdmin.Controllers
         {
             return _service.GetAll(brandid);
         }
+        [HttpGet("allActive/{brandid}")]
+        public List<CategoryBLL> GetAllActive(int brandid)
+        {
+            return _service.GetAllActive(brandid);
+        }
 
 
         [HttpGet("{id}/brand/{brandid}")]

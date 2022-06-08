@@ -28,7 +28,18 @@ namespace MohsinFoodAdmin.BLL._Services
                 return new List<CategoryBLL>();
             }
         }
-        
+        public List<CategoryBLL> GetAllActive(int brandID)
+        {
+            try
+            {
+                return _service.GetAllActive(brandID);
+            }
+            catch (Exception ex)
+            {
+                return new List<CategoryBLL>();
+            }
+        }
+
         public CategoryBLL Get(int id, int brandID)
         {
             try

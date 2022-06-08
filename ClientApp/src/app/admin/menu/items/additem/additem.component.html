@@ -17,7 +17,7 @@
                                     <select class="custom-select" formControlName="categoryID"> 
 
                                 <option [ngValue]="option.categoryID"  selected="option.categoryID == categoryID"
-                                    *ngFor="let option of Categories">
+                                    *ngFor="let option of CategoriesActive">
                                     {{option.name}}
                                 </option>
                             </select>
