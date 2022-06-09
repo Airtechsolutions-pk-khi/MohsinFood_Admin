@@ -99,7 +99,6 @@ import { NgbdModalContent } from './admin/sales/orders/modal-content/ngbd-OrderD
     AddaddonsComponent,
     ModalContentComponent,
     NgbdModalContent
-   
     
   ],
   imports: [
