@@ -85,7 +85,7 @@ namespace BAL.Repositories
                 p[0] = new SqlParameter("@date", data.LastUpdatedDate);
                 p[1] = new SqlParameter("@statusID", data.StatusID);
                 p[2] = new SqlParameter("@orderid", data.OrderID);
-                rtn = (new DBHelper().ExecuteNonQueryReturn)("sp_updateOrderstatus_Admin", p);
+                //rtn = (new DBHelper().ExecuteNonQueryReturn)("sp_updateOrderstatus_Admin", p);
 
                 return rtn;
             }

@@ -52,6 +52,7 @@ export class OrderdetailsComponent implements OnInit {
   }
 
   updateOrder(order, status) {
+    debugger
     order.statusID = status;
     //Update customer
     this.service.update(order).subscribe(data => {

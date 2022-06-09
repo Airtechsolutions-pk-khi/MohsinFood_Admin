@@ -10,6 +10,14 @@ import { delay, map } from 'rxjs/operators';
 import { Location } from 'src/app/_models/Location';
 import { NgbdDatepickerRangePopup } from 'src/app/datepicker-range/datepicker-range-popup';
 import { ExcelService } from 'src/ExportExcel/excel.service';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerOrders, OrderCheckout, OrderDetails } from 'src/app/_models/Orders';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalContent } from './modal-content/ngbd-OrderDetail-content.component';
+
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -35,7 +43,7 @@ export class OrdersComponent implements OnInit {
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   @ViewChild('locationDrp') drplocation: any;
-  constructor(public service: OrdersService,
+  constructor(public service: OrdersService,private modalService: NgbModal,
     public ls: LocalStorageService,
     public excelService: ExcelService,
     public ts: ToastService,
@@ -49,6 +57,30 @@ export class OrdersComponent implements OnInit {
     this.loadLocations();
   }
 
+  open(orders) 
+  {    
+            
+    this.service.getById(orders, this.selectedBrand).subscribe(res => {          
+      console.log(res);
+      const modalRef = this.modalService.open(NgbdModalContent);
+      modalRef.componentInstance.dataObj = res;      
+    });        
+  }
+
+  updateOrder(order, status) {
+    debugger
+    order.statusID = status;
+    //Update customer
+    this.service.update(order).subscribe(data => {
+
+      if (data != 0) {
+        this.ts.showSuccess("Success", "Record updated successfully.")
+        this.router.navigate(['/admin/orders']);
+      }
+    }, error => {
+      this.ts.showError("Error", "Failed to update record.")
+    });
+  }
   ngOnInit() {
   }
 
@@ -119,7 +151,7 @@ export class OrdersComponent implements OnInit {
     return of(items).pipe(delay(500));
   }
   Filter() {
-    debugger
+    
     this.getData(this.selectedLocations.toString());
   }
   printout(html) {

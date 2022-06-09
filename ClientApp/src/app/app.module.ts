@@ -53,6 +53,8 @@ import { AdddeliveryComponent } from './admin/settings/Delivery/adddelivery/addd
 import { AppsettingsComponent } from './admin/settings/appsettings/appsettings.component';
 import { AddonsComponent } from './admin/menu/addons/addons.component';
 import { AddaddonsComponent } from './admin/menu/addons/addaddons/addaddons.component';
+import { ModalContentComponent } from './admin/sales/orders/modal-content/modal-OrderDetail.component';
+import { NgbdModalContent } from './admin/sales/orders/modal-content/ngbd-OrderDetail-content.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +97,8 @@ import { AddaddonsComponent } from './admin/menu/addons/addaddons/addaddons.comp
     AppsettingsComponent,
     AddonsComponent,
     AddaddonsComponent,
+    ModalContentComponent,
+    NgbdModalContent
    
     
   ],

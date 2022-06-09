@@ -75,7 +75,7 @@ export class OrdersService {
   }  
   
   getById(id,brandId) {
-    return this.http.get<Orders[]>(`api/orders/${id}/brand/${brandId}`);
+    return this.http.get<any[]>(`api/orders/${id}/brand/${brandId}`);
   }
   printorder(id,brandId) {
     return this.http.get<Orders[]>(`api/orders/print/${id}`);

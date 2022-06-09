@@ -84,7 +84,8 @@
                             </ngb-highlight>
                         </td>
                         <td>
-                            <a (click)="View(item.orderID)"><i class="fas fa-fw fa-eye"></i> </a>
+                            <!-- <a (click)="View(item.orderID)"><i class="fas fa-fw fa-eye"></i> </a> -->
+                            <a (click)="open(item.orderID)"><i class="fas fa-fw fa-eye"></i> </a>
                             <a (click)="Print(item.orderID)"><i class="fas fa-fw fa-print"></i> </a>
                         </td>
                     </tr>
