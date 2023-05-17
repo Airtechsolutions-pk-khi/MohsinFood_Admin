@@ -54,6 +54,13 @@ namespace MohsinFoodAdmin.Controllers
             return _service.Update(obj, _env);
         }
 
+        [HttpPost]
+        [Route("updatePay")]
+        public int PostUpdatePayment([FromBody] OrdersBLL obj)
+        {
+            return _service.UpdatePayment(obj);
+        }
+
 
         [HttpPost]
         [Route("delete")]
