@@ -23,7 +23,9 @@ import { ActivatedRoute, Router } from '@angular/router';
               <h6 class="m-0 font-weight-bold text-orange">Order Details - <span class="badge badge-info"> {{ dataObj.order.statusID == 100 ? "Delivered" : dataObj.order.statusID==101 ?"Order confirmed" : dataObj.order.statusID == 102? "Order prepared" : dataObj.order.statusID == 103? " Order out for delivery" : dataObj.order.statusID == 104? "Order Cancelled" : "-" }}</span></h6>
           </div>
           <div class="col-md-6 text-right">
-
+          <button class="btn btn-warning text-right" (click)="updatePayment(dataObj.order);" >
+          <i class="fas fa-check-circle"></i> Recalculate
+        </button>  
           </div>
       </div>
       <hr/>
@@ -45,10 +47,14 @@ import { ActivatedRoute, Router } from '@angular/router';
                       <button class="btn btn-danger mr-1" (click)="updateOrder(dataObj.order,104)">
                         <i class="fas fa-people-carry"></i> Cancelled
                       </button>
+                      
                     </div>
                   </div>
               </div>
           </div>
+
+
+          
           <div class="col-md-6 mb-4">
 
               <div class="card border-left-success shadow mb-4">
@@ -197,7 +203,7 @@ import { ActivatedRoute, Router } from '@angular/router';
                               </a>
                                   </div>
                               </div>
-                              <div class="mr-2">{{ (dataObj.orderCheckouts.amountTotal | number : '1.2-2')}}</div>
+                              <div class="mr-2">{{ (dataObj.orderCheckouts.amountPaid | number : '1.2-2')}}</div>
                           </div>
                           <div class="d-flex align-items-center">
                               <div class="flex-grow-1">
@@ -306,6 +312,21 @@ export class NgbdModalContent {
       if (data != 0) {
         this.ts.showSuccess("Success", "Record updated successfully.")
         this.router.navigate(['/admin/orders']);
+      }
+    }, error => {
+      this.ts.showError("Error", "Failed to update record.")
+    });
+  }
+
+  updatePayment(orders) {
+    debugger
+      
+    this.service.updatePayment(orders).subscribe(data => {
+
+      if (data != 0) {
+        this.ts.showSuccess("Success", "Record updated successfully.");
+        this.router.navigate(['/admin/orders']);
+        this.activeModal.close('Close click');
       }
     }, error => {
       this.ts.showError("Error", "Failed to update record.")

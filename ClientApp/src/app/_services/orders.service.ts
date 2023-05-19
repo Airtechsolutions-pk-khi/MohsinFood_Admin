@@ -26,7 +26,7 @@ function sort(data: Orders[], column: SortColumn, direction: string): Orders[] {
 
 function matches(data: Orders, term: string) {
   
-  return data.orderNo.toLowerCase().includes(term.toLowerCase())
+  return data.customerName.toLowerCase().includes(term.toLowerCase())
 }
 
 @Injectable({
@@ -75,6 +75,7 @@ export class OrdersService {
   }  
   
   getById(id,brandId) {
+    debugger
     return this.http.get<any[]>(`api/orders/${id}/brand/${brandId}`);
   }
   printorder(id,brandId) {
@@ -83,7 +84,7 @@ export class OrdersService {
   getAllData(brandID,locationID,fromDate,toDate) {
 
     const url = `api/orders/all/${brandID}/${locationID}/0/${fromDate}/${toDate}`;
-    console.log(url);
+    
     tap(() => this._loading$.next(true)),
       this.http.get<Orders[]>(url).subscribe(res => {
         this.orders = res;
@@ -142,11 +143,18 @@ export class OrdersService {
   update(updateData) {
     return this.http.post(`api/orders/update`, updateData)
       .pipe(map(res => {
-        console.log(res);
+         
         return res;
       }));
   }
  
-   
+  updatePayment(orders) {
+    debugger
+    return this.http.post(`api/orders/updatePay`, orders)
+      .pipe(map(res => {
+        console.log(res);
+        return res;
+      }));
+  }  
 
 }

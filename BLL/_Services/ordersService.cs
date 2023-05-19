@@ -248,7 +248,20 @@ namespace MohsinFoodAdmin.BLL._Services
                 return 0;
             }
         }
+        public int UpdatePayment(OrdersBLL data)
+        {
+            try
+            {
+              
+                var result = _service.UpdatePay(data);
 
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
         public int Delete(OrdersBLL data)
         {
             try
