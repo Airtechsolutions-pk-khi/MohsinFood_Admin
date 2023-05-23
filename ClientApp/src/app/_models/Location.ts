@@ -23,5 +23,6 @@ export class Location {
   tax: number;
   isPickupAllowed:number;
   isDeliveryAllowed:number;
+  isDineInAllowed:number;
   
 }

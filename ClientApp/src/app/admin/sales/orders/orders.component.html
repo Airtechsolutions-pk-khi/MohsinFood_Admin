@@ -74,7 +74,7 @@
                         <td> {{item.serviceCharges | number : '1.2-2'}} </td> -->
                         <td> <span class="badge badge-success-soft text-success badge-pill py-2 px-3 mb-2" style="background-color: #bfe5dc;">{{item.grandTotal | number : '1.2-2'}} PKR</span> </td>
                         <td>{{item.orderDate | date}}</td>
-                        <td><span class="badge badge-yellow">{{item.orderType==1?"Delivery" :"Pick Up"}}</span></td>
+                        <td><span class="badge badge-yellow">{{item.orderType==1?"Delivery" :item.orderType==1?"Pick Up": "DineIn"}}</span></td>
                         <td>
                             <ngb-highlight [ngClass]="{'btn-info': item.statusID === 102,'btn-warning': item.statusID === 101,'btn-success': item.statusID === 100, 'btn-danger':item.statusID === 103, 'btn-danger':item.statusID === 104 }" class="btn btn-sm" [result]="item.statusID ==100 ? 'Delivered' :
                              item.statusID ==101 ? 'Confirmed' :
