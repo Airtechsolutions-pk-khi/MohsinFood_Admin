@@ -60,6 +60,7 @@ import { AdddeliveryboyComponent } from './admin/settings/delivery-boy/adddelive
 import { AdddeliveryComponent } from './admin/settings/delivery/adddelivery/adddelivery.component';
 import { DeliveryboydetailComponent } from './admin/report/deliveryboydetail/deliveryboydetail.component';
 import { OrderbytypeComponent } from './admin/report/orderbytype/orderbytype.component';
+import { EditorderComponent } from './admin/sales/editorder/editorder.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,8 @@ import { OrderbytypeComponent } from './admin/report/orderbytype/orderbytype.com
     DeliveryBoyComponent,
     AdddeliveryboyComponent,
     DeliveryboydetailComponent,
-    OrderbytypeComponent
+    OrderbytypeComponent,
+    EditorderComponent 
     
   ],
   imports: [
@@ -141,6 +143,7 @@ import { OrderbytypeComponent } from './admin/report/orderbytype/orderbytype.com
           { path: 'orders', component: OrdersComponent },
           { path: 'orders/add', component: OrderdetailsComponent },
           { path: 'orders/view/:id', component: OrderdetailsComponent },
+          { path: 'orders/edit/:id', component: EditorderComponent },
 
           { path: 'customer', component: CustomersComponent },
           { path: 'customer/add', component: AddcustomerComponent },

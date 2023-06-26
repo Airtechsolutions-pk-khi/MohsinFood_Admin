@@ -20,7 +20,28 @@ namespace MohsinFoodAdmin._Models
         public int Status { get; set; }
         public string HTML { get; set; }
     }
+    public class OrdersEditBLL
+    {
+        public int CustomerOrderID { get; set; }
+        public string Name { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
 
+        public string SenderAddress { get; set; }
+       
+        public string PlaceType { get; set; }
+       
+        public Nullable<int> StatusID { get; set; }
+        public string LastUpdatedBy { get; set; }
+        public Nullable<System.DateTime> LastUpdatedDate { get; set; }
+        public Nullable<int> OrderID { get; set; }
+        public string NearestPlace { get; set; }
+       
+        public List<OrderDetailBLL> OrderDetails { get; set; }
+        public OrdersBLL order { get; set; }
+    }
     public class OrdersBLL
     {
         public int OrderID { get; set; }

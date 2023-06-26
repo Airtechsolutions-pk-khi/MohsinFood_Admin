@@ -16,7 +16,7 @@
 <div id="invoice-POS">
 
     <center id="top">
-       <img src="http://mohsinfood-001-site2.mysitepanel.net/assets/img/favicon.png" width="150px"/>
+       <img src="http://mohsinfood-001-site2.itempurl.com/assets/img/favicon.png" width="150px"/>
         <h3 style="padding:12px 0">#receipttype#</h3>
         #orderno#
         <hr style="border-top:1px solid #000;border-bottom:1px solid #000;background: #000;" />

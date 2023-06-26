@@ -5,6 +5,7 @@ import { switchMap, tap, map } from 'rxjs/operators';
 import { SortColumn, SortDirection } from '../_directives/sortable.directive';
 import { State } from '../_models/State';
 import { Orders } from '../_models/Orders';
+import { Items } from '../_models/Items';
 
 
 interface SearchOrdersResult {
@@ -77,6 +78,9 @@ export class OrdersService {
   getById(id,brandId) {
     debugger
     return this.http.get<any[]>(`api/orders/${id}/brand/${brandId}`);
+  }
+  loadItems(BrandId) {
+    return this.http.get<Items[]>( `api/item/all/${BrandId}`);
   }
   printorder(id,brandId) {
     return this.http.get<Orders[]>(`api/orders/print/${id}`);
@@ -156,5 +160,12 @@ export class OrdersService {
         return res;
       }));
   }  
-
+  updateOrder(updateData) {
+    debugger
+    return this.http.post(`api/orders/edit`, updateData)
+      .pipe(map(res => {
+        console.log(res);
+        return res;
+      }));
+  }
 }

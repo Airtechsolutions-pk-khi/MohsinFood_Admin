@@ -248,6 +248,13 @@ namespace MohsinFoodAdmin.BLL._Services
                 return 0;
             }
         }
+        public int Edit(OrdersEditBLL obj, IWebHostEnvironment _env)
+        {
+            obj.LastUpdatedDate = _UTCDateTime_SA();
+            var result = _service.Edit(obj);
+
+            return result;
+        }
         public int UpdatePayment(OrdersBLL data)
         {
             try
