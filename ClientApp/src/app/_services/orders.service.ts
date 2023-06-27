@@ -6,6 +6,10 @@ import { SortColumn, SortDirection } from '../_directives/sortable.directive';
 import { State } from '../_models/State';
 import { Orders } from '../_models/Orders';
 import { Items } from '../_models/Items';
+import DeliveryBoy from '../_models/DeliveryBoy';
+import { Category } from '../_models/Cateogry';
+import { Addons } from '../_models/Addons';
+import { Modifiers } from 'popper.js';
 
 
 interface SearchOrdersResult {
@@ -79,12 +83,13 @@ export class OrdersService {
     debugger
     return this.http.get<any[]>(`api/orders/${id}/brand/${brandId}`);
   }
-  loadItems(BrandId) {
-    return this.http.get<Items[]>( `api/item/all/${BrandId}`);
+  getDeliveryBoys(brandId) {
+    return this.http.get<DeliveryBoy[]>(`api/DeliveryBoy/all/${brandId}`)
   }
   printorder(id,brandId) {
     return this.http.get<Orders[]>(`api/orders/print/${id}`);
   }
+ 
   getAllData(brandID,locationID,fromDate,toDate) {
 
     const url = `api/orders/all/${brandID}/${locationID}/0/${fromDate}/${toDate}`;
@@ -144,6 +149,25 @@ export class OrdersService {
     };
   }
 
+  loadCategory() {
+    debugger
+    return this.http.get<Category[]>(`api/category/allcategory/`);
+  }
+  loadAddon() {
+    debugger
+    return this.http.get<Addons[]>(`api/addons/alladdon/`);
+  }
+
+  loadModifiers(itemid) {
+    
+    return this.http.get<Modifiers[]>(`api/item/getmodifiers/${itemid}`);
+  }
+
+  
+  loadItems(categoryid) {
+    debugger
+    return this.http.get<Items[]>( `api/item/getitem/${categoryid}`);
+  }
   update(updateData) {
     return this.http.post(`api/orders/update`, updateData)
       .pipe(map(res => {

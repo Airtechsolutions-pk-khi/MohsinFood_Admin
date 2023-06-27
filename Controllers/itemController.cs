@@ -19,14 +19,22 @@ namespace MohsinFoodAdmin.Controllers
             _service = new itemService();
             _env = env;
         }
-
+        [HttpGet("getitem/{categoryid}")]
+        public List<ItemBLL> GetItem(int CategoryID)
+        {
+            return _service.GetItem(CategoryID);
+        }
         [HttpGet("all/{brandid}")]
         public List<ItemBLL> GetAll(int brandid)
         {
             return _service.GetAll(brandid);
         }
 
-
+        [HttpGet("getmodifiers/{itemid}")]
+        public List<ModifierBLL> GetModifier(int ItemID)
+        {
+            return _service.GetModifier(ItemID);
+        }
         [HttpGet("{id}/brand/{brandid}")]
         public ItemBLL Get(int id, int brandid)
         {

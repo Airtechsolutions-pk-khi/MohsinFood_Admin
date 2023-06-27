@@ -1,128 +1,165 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ItemsService } from 'src/app/_services/items.service';
+import { ImageuploadComponent } from 'src/app/imageupload/imageupload.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LocalStorageService } from 'src/app/_services/local-storage.service';
 import { ToastService } from 'src/app/_services/toastservice';
 import { OrdersService } from 'src/app/_services/orders.service';
-import { OrderDetails } from 'src/app/_models/Orders';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerOrders, DeliveryBoyOrders, OrderCheckout, OrderDetailAddons, OrderDetailModifiers, OrderDetails, Orders } from '../../../_models/Orders';
+import { Delivery } from '../../../_models/Delivery';
+//import { debug } from 'console';
 
-import { LocalStorageService } from 'src/app/_services/local-storage.service';
-import { NgbdDatepickerRangePopup } from 'src/app/datepicker-range/datepicker-range-popup';
 @Component({
   selector: 'app-editorder',
   templateUrl: './editorder.component.html',
   styleUrls: ['./editorder.component.css']
 })
-export class EditorderComponent implements OnInit {
+
+export class EditOrderComponent implements OnInit {
   submitted = false;
   orderForm: FormGroup;
   loading = false;
-  loadingItems = false;
-  private selectedBrand;
-  Images = [];
-  public odetail = new OrderDetails();
+  loadingCategory = false;
+  Categories = [];
+  Addons = [];
+  ItemList = [];
+  ModifiersList = [];
   OrderDetailList = [];
-  ItemsList = [];
-  model: NgbDateStruct;
-  @ViewChild(NgbdDatepickerRangePopup, { static: true }) dateObj;
+  OrderModifierList = [];
+  DeliveryBoys = [];
+  selectedModifierIds: string[];
+  private selectedBrand;
+  public order = new Orders();
+  public orderDetails = new OrderDetails();
+  public orderDetailModifiers = new OrderDetailModifiers();
+  public orderDetailAddons = new OrderDetailAddons();
+  public deliveryBoyOrder = new DeliveryBoyOrders();
+  public orderOrderCheckout = new OrderCheckout();
+  public orderCustomerInfo = new CustomerOrders();
+
+  @ViewChild(ImageuploadComponent, { static: true }) imgComp;
   constructor(
     private formBuilder: FormBuilder,
-    public ls: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
+    private ls: LocalStorageService,
     public ts: ToastService,
-    private oService: OrdersService
+    private orderService: OrdersService
+
   ) {
     this.selectedBrand = this.ls.getSelectedBrand().brandID;
+    this.loadCategory();
+    this.loadAddons();
+    this.GetAllDeliveryBoys();
     this.createForm();
-    this.loadItems();
-    // this.loadSubCategory();
-    this.setSelecteditem();
   }
 
   ngOnInit() {
-
+    this.setSelectedorder();
   }
 
   get f() { return this.orderForm.controls; }
 
   private createForm() {
     this.orderForm = this.formBuilder.group({
-
-      senderName: [''],
-      senderEmail: [''],
-      senderContact: [''],
-      senderAddress: [''],
+      customerMobile: [''],
+      customerAddress: [''],
       customerName: [''],
-      contactNo: [''],
-      email: [''],
-      cardNotes: [''],
-      address: [''],
-      nearestPlace: [''],
-      deliveryDate: [''],
-      deliveryTime: [''],
-      placeType: [''],
-      selectedTime: [''],
-      orderID: 0,
-      orderDetails: []
+      amountTotal: [],
+      tax: [],
+      serviceCharges: [],
+      discountAmount: [],
+      grandTotal: [],
+      locationID: [],
+      brandID: [],
+      statusID: [],
+      orderDate: [''],
+      orderType: [],
+      orderID: [],
+      deliveryBoyID: [],
+      orderDetails: [],
+      orderDetailModifiers: [],
+      orderDetailAddons: []
     });
   }
   private editForm(obj) {
-
+    debugger
     this.OrderDetailList = obj.orderDetails;
-    this.f.senderName.setValue(obj.customerOrders.senderName);
-    this.f.senderEmail.setValue(obj.customerOrders.senderEmail);
-    this.f.senderContact.setValue(obj.customerOrders.senderContact);
-    this.f.senderAddress.setValue(obj.customerOrders.senderAddress);
-    this.f.customerName.setValue(obj.customerOrders.customerName);
-    this.f.contactNo.setValue(obj.customerOrders.contactNo);
-    this.f.email.setValue(obj.customerOrders.email);
-    this.f.address.setValue(obj.customerOrders.address);
-    this.f.orderID.setValue(obj.order.orderID);
-    this.f.cardNotes.setValue(obj.customerOrders.cardNotes);
-    
-    this.f.nearestPlace.setValue(obj.customerOrders.nearestPlace);
-    this.f.deliveryDate.setValue(obj.customerOrders.deliveryDate);
-    this.f.deliveryTime.setValue(obj.customerOrders.selectedTime);
-    this.f.selectedTime.setValue(obj.customerOrders.selectedTime);
-
-    this.dateObj.model = { day: new Date(obj.customerOrders.deliveryDate).getDate(), month: new Date(obj.customerOrders.deliveryDate).getMonth(), year: new Date(obj.customerOrders.deliveryDate).getFullYear() };
-
+    //this.ModifiersList = obj.orderDetails[0].orderDetailModifiers;
+    this.f.customerName.setValue(obj.customerOrders.name);
+    this.f.customerMobile.setValue(obj.customerOrders.mobile);
+    this.f.customerAddress.setValue(obj.customerOrders.addressNickName);
+    this.f.orderType.setValue(obj.order.orderType);
+    this.f.orderDate.setValue(obj.order.orderDate);
+    this.f.statusID.setValue(obj.order.statusID);
+    this.f.orderDetails.setValue(this.OrderDetailList);
+    //this.f.orderDetails[0].orderDetailModifiers.setValue(this.ModifiersList);
+    this.order.deliveryBoyID === null || this.order.deliveryBoyID === undefined ? this.order.deliveryBoyID = 0 : console.log('ok');
   }
-
-  setSelecteditem() {
+  GetAllDeliveryBoys() {
+    this.orderService.getDeliveryBoys(this.selectedBrand).subscribe(data => {
+      if (Object.keys(data).length > 0) {
+        this.DeliveryBoys = data;
+      }
+    })
+  }
+  setSelectedorder() {
     this.route.paramMap.subscribe(param => {
       const sid = +param.get('id');
       if (sid) {
-        this.loadingItems = true;
+        this.loadingCategory = true;
         this.f.orderID.setValue(sid);
-        this.oService.getById(sid,this.selectedBrand).subscribe(res => {
+        this.orderService.getById(sid, this.f.brandID.value).subscribe(res => {
           //Set Forms
           this.editForm(res);
-          this.loadingItems = false;
+          this.loadingCategory = false;
         });
       }
     })
   }
+  private loadCategory() {
+    debugger
+    this.orderService.loadCategory().subscribe((res: any) => {
+      this.Categories = res;
+    });
+  }
+  private loadAddons() {
+    debugger
+    this.orderService.loadAddon().subscribe((res: any) => {
+      this.Addons = res;
+    });
+  }
 
+
+  onChange(event) {
+    debugger
+    let selectElementValue = event.target.value;
+    let [index, value] = selectElementValue.split(':').map(item => item.trim());
+
+    this.orderService.loadItems(value).subscribe((res: any) => {
+      this.ItemList = res;
+    });
+  }
+  onSelect(newValue) {
+    this.orderService.loadModifiers(newValue).subscribe((res: any) => {      
+      this.ModifiersList = res;
+    });     
+  }
   onSubmit() {
-
+    
     this.orderForm.markAllAsTouched();
     this.submitted = true;
     if (this.orderForm.invalid) { return; }
     this.loading = true;
     this.f.orderDetails.setValue(this.OrderDetailList);
-    this.f.deliveryDate.setValue(this.dateObj.model.year + "-" + this.dateObj.model.month + "-" + this.dateObj.model.day);
-    // this.f.categories.setValue(this.selectedCategoryIds == undefined ? "" : this.selectedCategoryIds.toString());
-    // this.f.subcategories.setValue(this.selectedSubCategoryIds == undefined ? "" : this.selectedSubCategoryIds.toString());
-    // this.f.statusID.setValue(this.f.statusID.value === true ? 1 : 2);
     if (parseInt(this.f.orderID.value) === 0) {
 
 
     } else {
-      debugger;
+      
       //Update order
-      this.oService.updateOrder(this.orderForm.value).subscribe(data => {
+      this.orderService.updateOrder(this.orderForm.value).subscribe(data => {
         this.loading = false;
         if (data != 0) {
           this.ts.showSuccess("Success", "Record updated successfully.")
@@ -134,49 +171,62 @@ export class EditorderComponent implements OnInit {
       });
     }
   }
-
-  // private loadCategory() {
-  //   this.oService.loadCategories().subscribe((res: any) => {
-  //     // this.CategoryList = res;
-  //   });
-  // }
-  private loadItems() {
-    debugger
-    this.oService.loadItems(this.selectedBrand).subscribe((res: any) => {
-
-      this.ItemsList = res;
-    });
-  }
-
-
   RemoveChild(obj) {
     const index = this.OrderDetailList.indexOf(obj);
     this.OrderDetailList.splice(index, 1);
   }
-  AddChild(val) {
-   
-   var obj = this.ItemsList.find(element => element.itemID == val.itemID);
-    if (val.itemID != null) {
-      if (!this.OrderDetailList.find(element => element.itemID == val.itemID)) {
-        this.OrderDetailList.push({
-          name: obj.name,
-          price: obj.price == null ? 0 : obj.price,
-          quantity: val.quantity == null ? 1 : val.quantity,
 
-          total: val.quantity * obj.price,
-          itemID: obj.itemID,
-          image: obj.image == null ? 0 : obj.image
+  AddChild(val) {
+    debugger
+    var obj = this.ItemList.find(element => element.itemID == val.itemID);
+    if (val.itemID != null) {
+      var addon = [];
+      var addontotal = 0;
+      if (val.addon != undefined) {
+        val.addon.forEach(ele => {
+          var obj1 = this.Addons.find(i => i.addonID == ele);
+          addon.push({
+            name: obj1.name,
+            price: obj1.price == null ? 0 : obj1.price,
+            quantity: val.quantity == null ? 1 : val.quantity,
+            total: val.quantity * obj1.price,
+            addonID: obj1.addonID,
+          });
+          addontotal += val.quantity * obj1.price;
         });
       }
-      else {
-        alert("Item already added in list")
+      var modifier = [];
+      var modifiertotal = 0;
+      if (val.modifier != undefined) {        
+          var obj2 = this.ModifiersList.find(j => j.modifierID == val.modifier);
+          modifier.push({
+            name: obj2.name,
+            price: obj2.price == null ? 0 : obj2.price,
+            quantity: val.quantity == null ? 1 : val.quantity,
+            total: val.quantity * obj2.price,
+            addonID: obj2.addonID,
+          });
+          modifiertotal += val.quantity * obj2.price;        
       }
+      this.OrderDetailList.push({
+        name: obj.name,
+        price: obj.price == null ? 0 : obj.price,
+        quantity: val.quantity == null ? 1 : val.quantity,
+        total: ((val.quantity * obj.price) + modifiertotal + addontotal),
+        itemID: obj.itemID,
+        image: obj.image == null ? 0 : obj.image,
+        orderDetailAddons: addon,
+        orderDetailModifiers: modifier
+      });
+
       this.clear();
+      this.orderDetails.quantity = 1;
+      this.orderDetails.price = 0;
     }
   }
   clear() {
-    this.odetail.quantity = 1;
-    this.odetail.price = 0;
+    this.orderDetails.quantity = 1;
+    this.orderDetails.price = 0;
 
   }
 }

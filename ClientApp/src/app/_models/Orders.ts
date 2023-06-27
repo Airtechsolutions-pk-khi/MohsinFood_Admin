@@ -18,6 +18,7 @@ export class Orders {
   orderID: number;
   orderPreparedDate: string;
   orderOFDDate: string;
+  deliveryBoyID: number;
 }
 
 export class OrderDetails {
@@ -30,6 +31,7 @@ export class OrderDetails {
   cost: number;
   statusID: number;
   orderDetailModifier: OrderDetailModifiers[]
+  orderDetailAddon: OrderDetailAddons[]
 }
 
 export class OrderDetailModifiers {
@@ -41,6 +43,15 @@ export class OrderDetailModifiers {
   price: number;
   cost: number;
   modifierName: string;
+  statusID: number;
+}
+export class OrderDetailAddons {
+  orderDetailAddonID: number;
+  orderDetailID: number;
+  addonID: number;
+  quantity: number;
+  price: number;
+  cost: number;
   statusID: number;
 }
 export class OrderCheckout {
@@ -67,4 +78,20 @@ export class CustomerOrders {
   locationURL: string;
   addressNickName: string;
   addressType: string;
+}
+export class DeliveryBoyOrders {
+  deliveryBoyID: number
+  dbName: string
+  dbAddress: string
+  dbContactNo: string
+  dbVehicleNo: string
+  dbcnicNo: string
+  image: string
+  createdOn: string
+  createdBy: string
+  updatedOn: string
+  updatedBy: string
+  statusID: number
+  brandID: number
+  amount: number
 }
