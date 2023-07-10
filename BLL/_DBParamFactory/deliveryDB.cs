@@ -50,6 +50,30 @@ namespace BAL.Repositories
                 return null;
             }
         }
+        public List<DeliveryBLL> GetAllArea()
+        {
+            try
+            {
+                var lst = new List<DeliveryBLL>();
+                SqlParameter[] p = new SqlParameter[0];
+                 
+
+                _dt = (new DBHelper().GetTableFromSP)("sp_GetAllDeliveryArea_V2", p);
+                if (_dt != null)
+                {
+                    if (_dt.Rows.Count > 0)
+                    {
+                        lst = _dt.DataTableToList<DeliveryBLL>();
+                    }
+                }
+                return lst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        
         public List<DeliveryBLL> GetAllBrand()
         {
             try

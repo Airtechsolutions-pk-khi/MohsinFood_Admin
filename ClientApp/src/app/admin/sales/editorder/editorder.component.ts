@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'src/app/_services/local-storage.service';
 import { ToastService } from 'src/app/_services/toastservice';
 import { OrdersService } from 'src/app/_services/orders.service';
+
 import { CustomerOrders, DeliveryBoyOrders, OrderCheckout, OrderDetailAddons, OrderDetailModifiers, OrderDetails, Orders } from '../../../_models/Orders';
 import { Delivery } from '../../../_models/Delivery';
 //import { debug } from 'console';
@@ -17,11 +18,13 @@ import { Delivery } from '../../../_models/Delivery';
 })
 
 export class EditOrderComponent implements OnInit {
+  [x: string]: any;
   submitted = false;
   orderForm: FormGroup;
   loading = false;
   loadingCategory = false;
   Categories = [];
+  DeliveryAreas = [];
   Addons = [];
   ItemList = [];
   ModifiersList = [];
@@ -53,6 +56,7 @@ export class EditOrderComponent implements OnInit {
     this.loadAddons();
     this.GetAllDeliveryBoys();
     this.createForm();
+    this.loadDeliveryArea();
   }
 
   ngOnInit() {
@@ -122,6 +126,12 @@ export class EditOrderComponent implements OnInit {
     debugger
     this.orderService.loadCategory().subscribe((res: any) => {
       this.Categories = res;
+    });
+  }
+  private loadDeliveryArea() {
+    debugger
+    this.orderService.loadDeliveryArea().subscribe((res: any) => {
+      this.DeliveryAreas = res;
     });
   }
   private loadAddons() {

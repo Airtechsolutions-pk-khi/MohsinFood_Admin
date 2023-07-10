@@ -28,6 +28,17 @@ namespace MohsinFoodAdmin.BLL._Services
                 return new List<DeliveryBLL>();
             }
         }
+        public List<DeliveryBLL> GetAllArea()
+        {
+            try
+            {
+                return _service.GetAllArea();
+            }
+            catch (Exception ex)
+            {
+                return new List<DeliveryBLL>();
+            }
+        }
         public List<DeliveryBLL> GetAllBrand()
         {
             try

@@ -10,6 +10,7 @@ import DeliveryBoy from '../_models/DeliveryBoy';
 import { Category } from '../_models/Cateogry';
 import { Addons } from '../_models/Addons';
 import { Modifiers } from 'popper.js';
+import { Delivery } from '../_models/Delivery';
 
 
 interface SearchOrdersResult {
@@ -153,6 +154,13 @@ export class OrdersService {
     debugger
     return this.http.get<Category[]>(`api/category/allcategory/`);
   }
+
+  loadDeliveryArea() {
+    debugger
+    return this.http.get<Delivery[]>(`api/delivery/allarea/`);
+  }
+
+  
   loadAddon() {
     debugger
     return this.http.get<Addons[]>(`api/addons/alladdon/`);

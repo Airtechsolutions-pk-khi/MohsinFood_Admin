@@ -24,6 +24,11 @@ namespace MohsinFoodAdmin.Controllers
         {
             return _service.GetAll(brandid);
         }
+        [HttpGet("allarea")]
+        public List<DeliveryBLL> GetAllArea()
+        {
+            return _service.GetAllArea();
+        }
         //[HttpGet("GetAllBrand")]
         //public List<DeliveryBLL> GetAllBrand()
         //{
