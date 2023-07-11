@@ -168,14 +168,15 @@ namespace BAL.Repositories
                 foreach (var item in data.OrderDetails)
                 {
                     value += item.Price * item.Quantity;
+                    Console.WriteLine(value);   
                 }
-                //decimal? DC = data.order.DeliveryAmount;
-                //var GT = Convert.ToDecimal(value) + DC;
-                SqlParameter[] par = new SqlParameter[3];
+                                
+                SqlParameter[] par = new SqlParameter[5];
                 par[0] = new SqlParameter("@AmountTotal", value);
                 par[1] = new SqlParameter("@GrandTotal", value);
                 par[2] = new SqlParameter("@OrderID", data.OrderID);
-
+                par[3] = new SqlParameter("@ModifierPrice", null);
+                par[4] = new SqlParameter("@AddonPrice", null);
                 (new DBHelper().ExecuteNonQueryReturn)("sp_UpdateOrderValue_Admin", par);
                 return 1;
             }

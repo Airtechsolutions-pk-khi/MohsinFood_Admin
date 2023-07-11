@@ -155,10 +155,10 @@ export class OrdersService {
     return this.http.get<Category[]>(`api/category/allcategory/`);
   }
 
-  loadDeliveryArea() {
-    debugger
-    return this.http.get<Delivery[]>(`api/delivery/allarea/`);
-  }
+  // loadDeliveryArea() {
+  //   debugger
+  //   return this.http.get<Delivery[]>(`api/delivery/allarea/`);
+  // }
 
   
   loadAddon() {
