@@ -52,8 +52,8 @@ export class EditOrderComponent implements OnInit {
 
   ) {
     this.selectedBrand = this.ls.getSelectedBrand().brandID;
-    this.loadCategory();
     this.loadAddons();
+    this.loadCategory();    
     this.GetAllDeliveryBoys();
     this.createForm();
     //this.loadDeliveryArea();

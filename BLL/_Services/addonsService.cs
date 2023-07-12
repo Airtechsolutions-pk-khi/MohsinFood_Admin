@@ -1,4 +1,5 @@
 ﻿using BAL.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using MohsinFoodAdmin._Models;
 using System;
 using System.Collections.Generic;
@@ -49,10 +50,11 @@ namespace MohsinFoodAdmin.BLL._Services
                 return null;
             }
         }
-        public int Insert(AddonsBLL data)
+        public int Insert(AddonsBLL data, IWebHostEnvironment _env)
         {
             try
             {
+                data.Image = UploadImage(data.Image, "Addon", _env);
                 data.LastUpdatedDate = _UTCDateTime_SA();
                 var result = _service.Insert(data);
 

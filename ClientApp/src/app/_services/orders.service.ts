@@ -163,7 +163,7 @@ export class OrdersService {
   
   loadAddon() {
     debugger
-    return this.http.get<Addons[]>(`api/addons/alladdon/`);
+    return this.http.get<Addons[]>(`api/addons/alladdons/`);
   }
 
   loadModifiers(itemid) {

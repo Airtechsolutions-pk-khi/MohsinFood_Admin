@@ -197,7 +197,8 @@ namespace MohsinFoodAdmin.BLL._Services
                         {
                             StatusID = j.StatusID,
                             Cost = j.Cost,
-                            Price = j.Price + modPrice + adnPrice,
+                            //Price = j.Price + modPrice + adnPrice,
+                            Price = j.Price,
                             Quantity = j.Quantity,
                             OrderDetailID = j.OrderDetailID,
                             LastUpdateDT = j.LastUpdateDT,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MohsinFoodAdmin._Models;
 using MohsinFoodAdmin.BLL._Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 
 namespace MohsinFoodAdmin.Controllers
 {
@@ -11,11 +12,13 @@ namespace MohsinFoodAdmin.Controllers
     public class addonsController : ControllerBase
     {
         addonsService _service;
-        public addonsController()
+        private readonly IWebHostEnvironment _env;
+        public addonsController(IWebHostEnvironment env)
         {
             _service = new addonsService();
+            _env = env;
         }
-        [HttpGet("alladdon")]
+        [HttpGet("alladdons")]
         public List<AddonsBLL> GetAddon()
         {
             return _service.GetAddon();
@@ -37,7 +40,7 @@ namespace MohsinFoodAdmin.Controllers
         [Route("insert")]
         public int Post([FromBody]AddonsBLL obj)
         {
-            return _service.Insert(obj);
+            return _service.Insert(obj, _env);
         }
 
         [HttpPost]
