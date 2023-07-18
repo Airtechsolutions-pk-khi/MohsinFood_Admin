@@ -107,6 +107,7 @@ export class OrdersComponent implements OnInit {
     this.router.navigate(["admin/orders/view", orders]);
   }
   Edit(orders) {
+    debugger
     this.router.navigate(["admin/orders/edit", orders]);
 }
   Print(sid) {

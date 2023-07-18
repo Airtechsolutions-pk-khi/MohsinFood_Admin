@@ -154,7 +154,7 @@ namespace MohsinFoodAdmin.BLL._Services
                         lstODM = new List<OrderModifiersBLL>();
                         double? modPrice = 0;
                         double? adnPrice = 0;
-                        foreach (var k in _dsorderdetailmodifier.Where(x => x.StatusID == 201 && x.OrderDetailID == j.OrderDetailID))
+                        foreach (var k in _dsorderdetailmodifier.Where(x => x.OrderDetailID == j.OrderDetailID))
                         {
                             lstODM.Add(new OrderModifiersBLL
                             {
@@ -173,7 +173,8 @@ namespace MohsinFoodAdmin.BLL._Services
 
 
                         }
-                        foreach (var l in _dsorderdetailaddons.Where(x => x.StatusID == 201 && x.OrderDetailID == j.OrderDetailID))
+                        lstADN = new List<OrderAddonsBLL>();
+                        foreach (var l in _dsorderdetailaddons.Where(x => x.OrderDetailID == j.OrderDetailID))
                         {
                             lstADN.Add(new OrderAddonsBLL
                             {
@@ -196,7 +197,8 @@ namespace MohsinFoodAdmin.BLL._Services
                         {
                             StatusID = j.StatusID,
                             Cost = j.Cost,
-                            Price = j.Price + modPrice,
+                            //Price = j.Price + modPrice + adnPrice,
+                            Price = j.Price,
                             Quantity = j.Quantity,
                             OrderDetailID = j.OrderDetailID,
                             LastUpdateDT = j.LastUpdateDT,

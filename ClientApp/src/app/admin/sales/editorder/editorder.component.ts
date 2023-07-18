@@ -24,7 +24,7 @@ export class EditOrderComponent implements OnInit {
   loading = false;
   loadingCategory = false;
   Categories = [];
-  DeliveryAreas = [];
+  //DeliveryAreas = [];
   Addons = [];
   ItemList = [];
   ModifiersList = [];
@@ -52,11 +52,11 @@ export class EditOrderComponent implements OnInit {
 
   ) {
     this.selectedBrand = this.ls.getSelectedBrand().brandID;
-    this.loadCategory();
     this.loadAddons();
+    this.loadCategory();    
     this.GetAllDeliveryBoys();
     this.createForm();
-    this.loadDeliveryArea();
+    //this.loadDeliveryArea();
   }
 
   ngOnInit() {
@@ -81,7 +81,7 @@ export class EditOrderComponent implements OnInit {
       orderDate: [''],
       orderType: [],
       orderID: [],
-      deliveryBoyID: [],
+      //deliveryBoyID: [],
       orderDetails: [],
       orderDetailModifiers: [],
       orderDetailAddons: []
@@ -98,8 +98,8 @@ export class EditOrderComponent implements OnInit {
     this.f.orderDate.setValue(obj.order.orderDate);
     this.f.statusID.setValue(obj.order.statusID);
     this.f.orderDetails.setValue(this.OrderDetailList);
-    //this.f.orderDetails[0].orderDetailModifiers.setValue(this.ModifiersList);
-    this.order.deliveryBoyID === null || this.order.deliveryBoyID === undefined ? this.order.deliveryBoyID = 0 : console.log('ok');
+    this.f.orderDetails[0].orderDetailModifiers.setValue(this.ModifiersList);
+    //this.order.deliveryBoyID === null || this.order.deliveryBoyID === undefined ? this.order.deliveryBoyID = 0 : console.log('ok');
   }
   GetAllDeliveryBoys() {
     this.orderService.getDeliveryBoys(this.selectedBrand).subscribe(data => {
@@ -128,12 +128,12 @@ export class EditOrderComponent implements OnInit {
       this.Categories = res;
     });
   }
-  private loadDeliveryArea() {
-    debugger
-    this.orderService.loadDeliveryArea().subscribe((res: any) => {
-      this.DeliveryAreas = res;
-    });
-  }
+  // private loadDeliveryArea() {
+  //   debugger
+  //   this.orderService.loadDeliveryArea().subscribe((res: any) => {
+  //     this.DeliveryAreas = res;
+  //   });
+  // }
   private loadAddons() {
     debugger
     this.orderService.loadAddon().subscribe((res: any) => {
@@ -214,7 +214,7 @@ export class EditOrderComponent implements OnInit {
             price: obj2.price == null ? 0 : obj2.price,
             quantity: val.quantity == null ? 1 : val.quantity,
             total: val.quantity * obj2.price,
-            addonID: obj2.addonID,
+            modifierID: obj2.modifierID,
           });
           modifiertotal += val.quantity * obj2.price;        
       }

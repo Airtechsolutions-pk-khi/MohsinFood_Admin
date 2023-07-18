@@ -256,9 +256,10 @@ import { ActivatedRoute, Router } from '@angular/router';
                           <table class="table table-striped">
                               <thead>
                                   <tr class="table-header">
-                                      <th width="50%">Name </th>
+                                      <th width="25%">Name </th>
                                       <th width="25">Quantity</th>
                                       <th width="25">Price</th>
+                                      
                                   </tr>
                               </thead>
                               <tbody>
@@ -266,11 +267,16 @@ import { ActivatedRoute, Router } from '@angular/router';
                                       <td> {{item.name}}
                                           <tr *ngFor="let item1 of item.orderDetailModifiers ">
                                               <td class="badge badge-pill">Modifier: {{item1.modifierName }} [{{item.Quantity}}X {{item1.price}} ] </td>
-
                                           </tr>
+
+                                          <tr *ngFor="let item2 of item.orderDetailAddons ">
+                                          <td class="badge badge-pill">Addon: {{item2.addonName }} [{{item.Quantity}}X {{item2.price}} ] </td>
+                                      </tr>
+
                                       </td>
                                       <td> {{item.quantity}} </td>
                                       <td> {{item.price}} </td>
+                                      
                                   </tr>
                               </tbody>
                           </table>
