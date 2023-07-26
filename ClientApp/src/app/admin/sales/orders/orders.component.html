@@ -14,12 +14,12 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-5 form-group">
+            <div class="col-md-6 form-group">
                 <label>Select Date</label>
                 <ngbd-datepicker-range-popup></ngbd-datepicker-range-popup>
             </div>
 
-            <div class=" col-lg-4 input-group mb-3"style="padding-top: 25px;">
+            <div class=" col-lg-3 input-group mb-3"style="padding-top: 25px;">
                 <div class="input-group-prepend" style="height: 39px;">
                     <span class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
@@ -59,7 +59,7 @@
                         <th width="10%" sortable="orderDate" (sort)="onSort($event)">Date </th>
                         <th width="10%" sortable="orderType" (sort)="onSort($event)">Order Type </th>
                         <th width="10%" sortable="statusID" (sort)="onSort($event)">Status </th>
-                        <th width="5%"></th>
+                        <th width="10%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,7 +74,7 @@
                         <td> {{item.serviceCharges | number : '1.2-2'}} </td> -->
                         <td> <span class="badge badge-success-soft text-success badge-pill py-2 px-3 mb-2" style="background-color: #bfe5dc;">{{item.grandTotal | number : '1.2-2'}} PKR</span> </td>
                         <td>{{item.orderDate | date}}</td>
-                        <td><span class="badge badge-yellow">{{item.orderType==1?"Delivery" :item.orderType==2?"Pick Up": "DineIn"}}</span></td>
+                        <td><span class="badge badge-dark">{{item.orderType==1?"Delivery" :item.orderType==2?"Pick Up": "DineIn"}}</span></td>
                         <td>
                             <ngb-highlight [ngClass]="{'btn-info': item.statusID === 102,'btn-warning': item.statusID === 101,'btn-success': item.statusID === 100, 'btn-danger':item.statusID === 103, 'btn-danger':item.statusID === 104 }" class="btn btn-sm" [result]="item.statusID ==100 ? 'Delivered' :
                              item.statusID ==101 ? 'Confirmed' :
