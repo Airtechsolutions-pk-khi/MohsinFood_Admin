@@ -189,10 +189,20 @@ namespace BAL.Repositories
         {
             try
             {
+                object value = "";
+                SqlParameter[] para = new SqlParameter[1];
+                para[0] = new SqlParameter("@OrderID", data.OrderID);
+
+                _dt = (new DBHelper().GetTableFromSP)("sp_GetDeliveryAmount", para);
+                if (_dt.Rows.Count > 0)
+                {
+                    value = _dt.Rows[0]["Amount"];
+                }
                 int rtn = 0;
-                SqlParameter[] p = new SqlParameter[1];
+                SqlParameter[] p = new SqlParameter[2];
  
                 p[0] = new SqlParameter("@orderid", data.OrderID);
+                p[1] = new SqlParameter("@Amount", value);
                 rtn = (new DBHelper().ExecuteNonQueryReturn)("sp_RecalculatePayment_MohsinAdmin", p);
 
                 return rtn;

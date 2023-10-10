@@ -65,6 +65,7 @@ export class OrderCheckout {
   discountAmount: number;
   grandTotal: number;
   checkoutDate: string;
+  deliveryAreaID:number;
 }
 export class CustomerOrders {
   customerOrderID: number;
