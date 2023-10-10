@@ -189,7 +189,7 @@ namespace BAL.Repositories
         {
             try
             {
-                object value = "";
+                object value = null;
                 SqlParameter[] para = new SqlParameter[1];
                 para[0] = new SqlParameter("@OrderID", data.OrderID);
 
